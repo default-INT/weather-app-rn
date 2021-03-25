@@ -3,7 +3,7 @@ import { CITIES } from "../../constants/types";
 const initialState = {
     citiesWeather: [],
     searchedCities: [],
-    currentCityDaily: null
+    currentCityWeather: null
 }
 
 
@@ -16,9 +16,9 @@ const handlers = {
         ...state,
         searchedCities: payload
     }),
-    [CITIES.SET_CURRENT_CITY_DAILY]: (state, {payload}) => ({
+    [CITIES.SET_CURRENT_CITY_WEATHER]: (state, {payload}) => ({
         ...state,
-        currentCityDaily: payload
+        currentCityWeather: payload
     }),
     DEFAULT: state => state
 }

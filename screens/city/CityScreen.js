@@ -66,6 +66,7 @@ const CityScreen = ({navigation, ...props}) => {
         try {
             if (!currentLocation) {
                 await dispatch(locationActions.getCurrentLocation());
+                dispatch(citiesActions.getCurrentCityWeather());
             }
             await dispatch(citiesActions.getCitiesInCircleWeather(8));
         } catch (err) {
