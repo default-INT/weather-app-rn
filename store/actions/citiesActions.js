@@ -1,7 +1,8 @@
 import { CITIES } from "../../constants/types";
 
 const APPID = '49dd015e8b9932d12c318a4b55ecb544';
-
+const URL = 'https://api.openweathermap.org/data/2.5'
+// 
 export const clearCities = () => {
     return {
         type: CITIES.SET_CITIES_WEATHER,
@@ -16,7 +17,7 @@ export const getCitiesInCircleWeather = cityCount => {
         if (!currentLocation) {
             throw new Error('Not found user loaction');
         }
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/find?lat=${currentLocation.lat}&lon=${currentLocation.lon}&cnt=${cityCount}&appid=${APPID}`);
+        const response = await fetch(`${URL}/find?lat=${currentLocation.lat}&lon=${currentLocation.lon}&cnt=${cityCount}&appid=${APPID}`);
         if (!response.ok) {
             throw new Error("Can't fetch cities in circle");
         }
@@ -31,7 +32,7 @@ export const getCitiesInCircleWeather = cityCount => {
 
 export const getCitiesWeatherByName = cityName => {
     return async dispatch => {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/find?q=${cityName}&appid=${APPID}`);
+        const response = await fetch(`${URL}/find?q=${cityName}&appid=${APPID}`);
         if (!response.ok) {
             throw new Error("Can't fetch cities by name");
         }
@@ -40,5 +41,14 @@ export const getCitiesWeatherByName = cityName => {
             type: CITIES.GET_CITIES_WEATHER_BY_NAME,
             payload: cities.list
         });
+    }
+}
+
+export const getCityById = cityId => {
+    return async dispatch => {
+        const response = await fetch(`${URL}/weather?id=${cityId}&appid=${APPID}`)
+        if (!response.ok) {
+            throw new Error("Can't find");
+        }
     }
 }

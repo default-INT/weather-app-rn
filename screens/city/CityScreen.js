@@ -12,6 +12,7 @@ const CityScreen = ({navigation, ...props}) => {
     const currentLocation = useSelector(state => state.location.currentLocation);
     const citiesWeather = useSelector(state => state.cities.citiesWeather);
     const searchedCities = useSelector(state => state.cities.searchedCities);
+
     const [cityInputValue, setCityInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
@@ -28,7 +29,17 @@ const CityScreen = ({navigation, ...props}) => {
             Alert.alert('Error', err.message, [{message: 'Okay'}]);
         }
         setIsLoading(false);
-    }, [cityInputValue, timeoutId]);
+    }, [cityInputValue, timeoutId, isLoading]);
+
+    const onSelectCityHandler = city => {
+        navigation.navigate('CityDetails', {
+            cityId: city.id,
+            cityName: city.name,
+            cityDt: city.dt,
+            cityTemp: city.main.temp,
+            cityWeather: city.weather[0].main
+        })
+    }
 
     useEffect(() => {
         if (cityInputValue.trim() !== '' && cityInputValue.length > 3) {
@@ -40,10 +51,11 @@ const CityScreen = ({navigation, ...props}) => {
             }, 500);
             return;
         }
+        //TODO: fix double request
         if (isSearching) {
             setIsSearching(false);
         }
-    }, [cityInputValue, timeoutId]);
+    }, [cityInputValue, timeoutId, isSearching]);
     
     const textHandler = text => {
         setCityInputValue(text);
@@ -107,7 +119,7 @@ const CityScreen = ({navigation, ...props}) => {
                         <FlatList
                             data={searchedCities}
                             keyExtractor={item => item.id + ''}
-                            renderItem={itemData => <CitySearchItem city={itemData.item} />}
+                            renderItem={itemData => <CitySearchItem city={itemData.item} onSelect={onSelectCityHandler.bind(this)} />}
                         />
                     )}
                 </View>
@@ -121,7 +133,7 @@ const CityScreen = ({navigation, ...props}) => {
                 data={citiesWeather}
                 keyExtractor={item => item.id + ''}
                 numColumns={2}
-                renderItem={itemData => <CityCardItem city={itemData.item} />}
+                renderItem={itemData => <CityCardItem city={itemData.item} onSelect={onSelectCityHandler.bind(this)} />}
                 refreshing={isLoading}
                 onRefresh={() => loadCities()}
              />

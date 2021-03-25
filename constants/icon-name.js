@@ -21,6 +21,10 @@ export const WEATHER_ICONS = {
         name: isIos() ? 'ios-cloudy' : 'md-cloudy',
         color: Colors.gray
     },
+    'CLOUDS': {
+        name: isIos() ? 'ios-cloudy' : 'md-cloudy',
+        color: Colors.gray
+    },
     DEFAULT: {
         name: isIos() ? 'ios-sunny' : 'md-sunny',
         color: Colors.orange

@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { CityScreen } from "../screens/city";
+import { CityScreen, CityDetailsScreen } from "../screens/city";
 import { DailyScreen } from "../screens/daily";
 import { HourlyScreen } from "../screens/hourly";
 
@@ -25,6 +25,10 @@ const CityNavigator = () => {
             <CityStackNavigator.Screen 
                 name="City"
                 component={CityScreen}
+            />
+            <CityStackNavigator.Screen 
+                name="CityDetails"
+                component={CityDetailsScreen}
             />
         </CityStackNavigator.Navigator>
     )

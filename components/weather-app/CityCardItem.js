@@ -1,18 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import Card from "../Card";
 import { TouchableComponent } from "../UI";
 import Colors from "../../constants/color";
 import { WEATHER_ICONS } from "../../constants/icon-name";
 
-const CityCardItem = ({city, ...prosp}) => {
+const CityCardItem = ({city, onSelect, ...prosp}) => {
     const weatherIcon = WEATHER_ICONS[city.weather[0].main.toUpperCase()] || WEATHER_ICONS.DEFAULT;
     return (
         <Card style={styles.card}>
             <View style={styles.touchable}>
-                <TouchableComponent>
+                <TouchableComponent onPress={() => onSelect(city)}>
                     <View>
                         <View style={styles.title}>
                             <Text style={styles.titleText}>{city.name}</Text>

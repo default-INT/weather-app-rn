@@ -8,7 +8,7 @@ import Colors from "../../constants/color";
 import { WEATHER_ICONS } from "../../constants/icon-name";
 import { City } from "../../models";
 
-const CitySearchItem = ({city, ...prosp}) => {
+const CitySearchItem = ({city, onSelect, ...prosp}) => {
     const weatherIcon = WEATHER_ICONS[city.weather[0].main.toUpperCase()] || WEATHER_ICONS.DEFAULT;
     let temp = (city.main.temp - 272.1).toFixed(0);
     if (temp > 0) {
@@ -19,7 +19,7 @@ const CitySearchItem = ({city, ...prosp}) => {
     return (
         <View style={styles.card}>
             <View style={styles.touchable}>
-                <TouchableComponent>
+                <TouchableComponent onPress={() => onSelect(city)}>
                     <View style={styles.mainContainer}>
                         <View style={styles.leftContainer}>
                             <View style={styles.title}>
