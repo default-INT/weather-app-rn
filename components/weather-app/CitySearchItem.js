@@ -1,21 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 
-import Card from "../Card";
-import { TouchableComponent } from "../UI";
+import { TouchableComponent, WeatherIcon } from "../UI";
+import { toTempFormatter } from "../../constants/utils";
 import Colors from "../../constants/color";
-import { WEATHER_ICONS } from "../../constants/icon-name";
-import { City } from "../../models";
 
 const CitySearchItem = ({city, onSelect, ...prosp}) => {
-    const weatherIcon = WEATHER_ICONS[city.weather[0].main.toUpperCase()] || WEATHER_ICONS.DEFAULT;
-    let temp = (city.main.temp - 272.1).toFixed(0);
-    if (temp > 0) {
-        temp = '+ ' + temp;
-    } else if (temp < 0) {
-        temp = '- ' + temp;
-    }
+    const temp = toTempFormatter(city.main.temp);
     return (
         <View style={styles.card}>
             <View style={styles.touchable}>
@@ -26,11 +17,11 @@ const CitySearchItem = ({city, onSelect, ...prosp}) => {
                                 <Text style={styles.titleText}>{city.name}, {city.sys.country}</Text>
                             </View>
                             <View style={styles.temp}>
-                                    <Text>{temp} С</Text>
-                                </View>
+                                <Text>{temp} С</Text>
+                            </View>
                         </View>
                         <View style={styles.rightContainer}>
-                            <Ionicons name={weatherIcon.name} size={48} color={weatherIcon.color} />
+                            <WeatherIcon iconName={city.weather[0].icon} />
                         </View>
                     </View>
                 </TouchableComponent>
@@ -46,6 +37,10 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.whitesmoke,
         marginHorizontal: 10,
         elevation: 0
+    },
+    icon: {
+        width: 50,
+        height: 50
     },
     mainContainer: {
         flexDirection: 'row',

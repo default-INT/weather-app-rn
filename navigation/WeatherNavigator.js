@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -66,7 +65,6 @@ const HourlyNavigator = () => {
 
 const MainTabNavigator = createBottomTabNavigator();
 
-//TODO: detachInactiveScreens ??
 export const MainNavigator = () => {
     return (
         <MainTabNavigator.Navigator
@@ -79,7 +77,7 @@ export const MainNavigator = () => {
                     tabBarIcon: tabInfo => (
                         <MaterialIcons name='location-city' size={24} color={tabInfo.color} />
                     ),
-                    tabBarLabel: 'City'
+                    tabBarLabel: 'City',
                 }}
             />
             <MainTabNavigator.Screen

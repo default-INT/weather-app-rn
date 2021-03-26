@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
+import { WeatherIcon } from "../../components/UI";
 import { convertDateFromUTC, toTempFormatter, toTimeFormat, MONTHS } from "../../constants/utils";
-import { WEATHER_ICONS } from "../../constants/icon-name";
 import Colors from "../../constants/color";
 
 const CityDetailsScreen = ({navigation, route, ...props}) => {
-    const { cityId, cityName, cityDt, cityWeather, cityTemp } = route.params;
+    const { weatherIcon, cityName, cityDt, cityWeather, cityTemp } = route.params;
     const date = convertDateFromUTC(cityDt);
     useEffect(() => {
         navigation.setOptions({
@@ -15,7 +14,7 @@ const CityDetailsScreen = ({navigation, route, ...props}) => {
             headerTitleAlign: 'center'
         })
     }, []);
-    const weatherIcon = WEATHER_ICONS[cityWeather.toUpperCase()] || WEATHER_ICONS.DEFAULT;
+    // const weatherIcon = WEATHER_ICONS[cityWeather.toUpperCase()] || WEATHER_ICONS.DEFAULT;
     return (
         <View style={styles.screen}>
             <View>
@@ -24,7 +23,7 @@ const CityDetailsScreen = ({navigation, route, ...props}) => {
                     <Text style={styles.titleText}>{toTimeFormat(date.getHours(), date.getMinutes())}</Text>
                 </View>
                 <View style={styles.weatherContainer}>
-                    <Ionicons name={weatherIcon.name} size={180} color={weatherIcon.color} />
+                    <WeatherIcon iconName={weatherIcon} size={130} />
                     <View style={styles.weather}>
                         <Text style={styles.weatherText}>{cityWeather}</Text>
                         <Text style={styles.weatherText}>{toTempFormatter(cityTemp)} С</Text>

@@ -1,14 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
 import Card from "../Card";
-import { TouchableComponent } from "../UI";
+import { TouchableComponent, WeatherIcon } from "../UI";
+import { toTempFormatter } from "../../constants/utils";
 import Colors from "../../constants/color";
-import { WEATHER_ICONS } from "../../constants/icon-name";
 
 const CityCardItem = ({city, onSelect, ...prosp}) => {
-    const weatherIcon = WEATHER_ICONS[city.weather[0].main.toUpperCase()] || WEATHER_ICONS.DEFAULT;
     return (
         <Card style={styles.card}>
             <View style={styles.touchable}>
@@ -18,9 +16,9 @@ const CityCardItem = ({city, onSelect, ...prosp}) => {
                             <Text style={styles.titleText}>{city.name}</Text>
                         </View>
                         <View style={styles.weatherContainer}>
-                            <Ionicons name={weatherIcon.name} size={48} color={weatherIcon.color} />
+                            <WeatherIcon iconName={city.weather[0].icon} />
                             <View style={styles.temp}>
-                                <Text>{(city.main.temp - 272.1).toFixed(0)} С</Text>
+                                <Text>{toTempFormatter(city.main.temp)} С</Text>
                             </View>
                         </View>
                     </View>
@@ -46,6 +44,10 @@ const styles = StyleSheet.create({
     },
     temp: {
         paddingVertical: 5
+    },
+    logo: {
+        width: 50,
+        height: 50
     },
     title: {
         padding: 10,

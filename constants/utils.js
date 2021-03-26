@@ -1,4 +1,4 @@
-import {UNIX_TIMESTAMP} from "./index";
+
 
 export const convertDateFromUTC = utcDate => {
     return new Date(utcDate * 1000);
@@ -36,4 +36,18 @@ export const MONTHS = [
     'October',
     'November',
     'December'
-]
+];
+
+export const dayFormatter = day => {
+    const ends = day % 10;
+    switch (ends) {
+        case 1:
+            return day + 'st';
+        case 2:
+            return day + 'nd';
+        case 3:
+            return day + 'rd';
+        default:
+            return day + 'th';
+    }
+}

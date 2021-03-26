@@ -1,12 +1,28 @@
 import { CITIES } from "../../constants/types";
+import { URL, APPID } from "../../constants";
+import { DEFAULT_CITIES } from "../../data/dummy-data";
 
-const APPID = '49dd015e8b9932d12c318a4b55ecb544';
-const URL = 'https://api.openweathermap.org/data/2.5'
-// 
+
+
 export const clearCities = () => {
     return {
         type: CITIES.SET_CITIES_WEATHER,
         payload: []
+    }
+}
+
+export const getStaticCities = () => {
+    return async dispatch => {
+        const cities = [];
+        for (const city of DEFAULT_CITIES) {
+            const response = await fetch(`${URL}/weather?id=${city.id}&appid=${APPID}`);
+            const fetchCity = await response.json();
+            cities.push(fetchCity);
+        }
+        dispatch({
+            type: CITIES.SET_CITIES_WEATHER,
+            payload: cities
+        });
     }
 }
 
@@ -15,7 +31,8 @@ export const getCitiesInCircleWeather = cityCount => {
         dispatch(clearCities());
         const { currentLocation } = getState().location;
         if (!currentLocation) {
-            throw new Error('Not found user loaction');
+            await dispatch(getStaticCities());
+            return;
         }
         const response = await fetch(`${URL}/find?lat=${currentLocation.lat}&lon=${currentLocation.lon}&cnt=${cityCount}&appid=${APPID}`);
         if (!response.ok) {
@@ -46,6 +63,10 @@ export const getCitiesWeatherByName = cityName => {
 
 export const getCurrentCityWeather = () => {
     return async (dispatch, getState) => {
+        dispatch({
+            type: CITIES.SET_CURRENT_CITY_WEATHER,
+            payload: null
+        })
         const { currentLocation } = getState().location;
         let response = await fetch(`${URL}/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&appid=${APPID}`);
         if (!response.ok) {

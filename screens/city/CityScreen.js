@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { StyleSheet, Text, View, Alert, ActivityIndicator, FlatList, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Alert, ActivityIndicator, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -16,20 +16,22 @@ const CityScreen = ({navigation, ...props}) => {
     const [cityInputValue, setCityInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
+    const [error, setError] = useState(null);
     
     let timeoutId;
     const dispatch = useDispatch();
 
-    const fetchCityByName = useCallback(async () => {
+    const fetchCityByName = useCallback(async (text) => {
         setIsSearching(true);
         setIsLoading(true);
         try {
-            await dispatch(citiesActions.getCitiesWeatherByName(cityInputValue));
+            await dispatch(citiesActions.getCitiesWeatherByName(text));
         } catch (err) {
             Alert.alert('Error', err.message, [{message: 'Okay'}]);
+            setError('Something went wrong during network call');
         }
         setIsLoading(false);
-    }, [cityInputValue, timeoutId, isLoading]);
+    }, [timeoutId, isLoading, setError]);
 
     const onSelectCityHandler = city => {
         navigation.navigate('CityDetails', {
@@ -37,40 +39,40 @@ const CityScreen = ({navigation, ...props}) => {
             cityName: city.name,
             cityDt: city.dt,
             cityTemp: city.main.temp,
-            cityWeather: city.weather[0].main
+            cityWeather: city.weather[0].main,
+            weatherIcon: city.weather[0].icon
         })
     }
-
-    useEffect(() => {
-        if (cityInputValue.trim() !== '' && cityInputValue.length > 3) {
+    
+    const textHandler = text => {
+        setCityInputValue(text);
+        if (text.trim() !== '' && text.length > 3) {
             if (timeoutId) {
                 clearTimeout(timeoutId);
             }
             timeoutId = setTimeout(() => {
-                fetchCityByName();
+                fetchCityByName(text);
             }, 500);
             return;
         }
-        //TODO: fix double request
-        if (isSearching) {
-            setIsSearching(false);
-        }
-    }, [cityInputValue, timeoutId, isSearching]);
-    
-    const textHandler = text => {
-        setCityInputValue(text);
+        setIsSearching(false);
     };
 
     const loadCities = useCallback(async () => {
         setIsLoading(true);
         try {
             if (!currentLocation) {
-                await dispatch(locationActions.getCurrentLocation());
-                dispatch(citiesActions.getCurrentCityWeather());
+                try {
+                    await dispatch(locationActions.getCurrentLocation());
+                    dispatch(citiesActions.getCurrentCityWeather());
+                } catch (err) {
+                    console.log(err.message);
+                }
             }
             await dispatch(citiesActions.getCitiesInCircleWeather(8));
         } catch (err) {
             Alert.alert('Error', err.message, [{text: 'Okay'}]);
+            setError('Something went wrong during network call');
         }
         setIsLoading(false);
     }, [dispatch, setIsLoading]);
@@ -83,13 +85,41 @@ const CityScreen = ({navigation, ...props}) => {
     useEffect(() => {
         navigation.setOptions({
             headerTitle: () => {
-                //TODO: onSubmit
                 return (
                   <SearchInput value={cityInputValue} onChangeText={textHandler}/>
                 );
-              }
+            }
         });
     }, []);
+
+    useEffect(() => {
+        let unsubscribeTabPress;
+        const unsubscribeBlur = navigation.dangerouslyGetParent()
+            .addListener('blur', () => {
+                if (unsubscribeTabPress) {
+                    unsubscribeTabPress();
+                }
+            });
+        const unsubscribeFocus = navigation.dangerouslyGetParent()
+            .addListener('focus', () => {
+                unsubscribeTabPress = navigation.dangerouslyGetParent()
+                    .addListener('tabPress', e => {
+                        loadCities();
+                    });
+            });
+        return () => {
+            unsubscribeBlur();
+            unsubscribeFocus();
+        }
+    }, [navigation]);
+
+    if (error) {
+        return (
+            <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
+                <Text>{error}</Text>
+            </View>
+        )
+    }
 
 
     if (isLoading) {
@@ -100,29 +130,32 @@ const CityScreen = ({navigation, ...props}) => {
         )
     }
     
-    if (isSearching) {
+    if (isSearching && cityInputValue.trim().length > 3) {
+        if (searchedCities.length === 0) {
+            return (
+                <View style={styles.notFoundScreen}>
+                    <View style={styles.imgContainer}>
+                        <Ionicons name="md-sad-outline" color={Colors.gray} size={50}/>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.notFoundText} >No data for "{cityInputValue}"</Text>
+                    </View>
+                </View>
+            )
+        }
         return (
             <View style={styles.screen}>
                 <View style={styles.headSearch}>
                     <Text style={styles.headSearchText}>SEARCH RESULTS</Text>
                 </View>
                 <View>
-                    {searchedCities.length === 0 ? (
-                        <View style={styles.notFoundScreen}>
-                            <View style={styles.imgContainer}>
-                                <Ionicons name="md-sad-outline" color={Colors.gray} size={50}/>
-                            </View>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.notFoundText} >No data for "{cityInputValue}"</Text>
-                            </View>
-                        </View>
-                    ) : (
-                        <FlatList
-                            data={searchedCities}
-                            keyExtractor={item => item.id + ''}
-                            renderItem={itemData => <CitySearchItem city={itemData.item} onSelect={onSelectCityHandler.bind(this)} />}
-                        />
-                    )}
+                <FlatList
+                    data={searchedCities}
+                    keyExtractor={item => item.id + ''}
+                    renderItem={itemData => <CitySearchItem city={itemData.item} onSelect={onSelectCityHandler.bind(this)} />}
+                    refreshing={isLoading}
+                    onRefresh={() => fetchCityByName(cityInputValue)}
+                />
                 </View>
             </View>
         )
@@ -152,9 +185,10 @@ const styles = StyleSheet.create({
         padding: 10
     },
     notFoundScreen: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: Dimensions.get('screen').height / 2
+        backgroundColor: Colors.white
     },
     imgContainer: {
         backgroundColor: Colors.lightGray,
@@ -165,12 +199,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold'
     },
+    textContainer: {
+        padding: 10
+    },
     headSearchText: {
         fontWeight: 'bold'
     },
-    textContainer: {
-        padding: 10
-    }
 });
 
 export default CityScreen;

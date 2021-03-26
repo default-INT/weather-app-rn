@@ -1,15 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
-import { convertDateFromUTC, toTempFormatter, toTimeFormat, MONTHS } from "../../constants/utils";
-import { WEATHER_ICONS } from "../../constants/icon-name";
-import Colors from "../../constants/color";
+import { WeatherIcon } from "../../components/UI";
+import { convertDateFromUTC, toTempFormatter, toTimeFormat } from "../../constants/utils";
 
 const HourItem = ({hour, ...props}) => {
     const temp = toTempFormatter(hour.temp);
     const date = convertDateFromUTC(hour.dt);
-    const weatherIcon = WEATHER_ICONS[hour.weather[0].main.toUpperCase()] || WEATHER_ICONS.DEFAULT;
     return (
         <View style={styles.item}>
             <View style={styles.mainContainer}>
@@ -22,7 +19,7 @@ const HourItem = ({hour, ...props}) => {
                     </View>
                 </View>
                 <View style={styles.rightContainer}>
-                    <Ionicons name={weatherIcon.name} size={48} color={weatherIcon.color} />
+                    <WeatherIcon iconName={hour.weather[0].icon} />
                 </View>
             </View>
         </View>
