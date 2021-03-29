@@ -17,9 +17,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "by.mbicycle.weatherap",
+      "buildNumber": "1.1.0",
       "supportsTablet": true
     },
     "android": {
+      "package": "by.mbicycle.weatherapp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/my-adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
