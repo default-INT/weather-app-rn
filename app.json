@@ -24,6 +24,7 @@
     "android": {
       "package": "by.mbicycle.weatherapp",
       "versionCode": 1,
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/my-adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

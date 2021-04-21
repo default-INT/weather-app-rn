@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { StyleSheet, Text, View, Alert, ActivityIndicator, FlatList } from "react-native";
+import React, { useState, useEffect, useCallback} from "react";
+import { StyleSheet, Text, View, Alert, ActivityIndicator, FlatList, AppState } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -121,7 +121,6 @@ const CityScreen = ({navigation, ...props}) => {
         )
     }
 
-
     if (isLoading) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
@@ -143,6 +142,7 @@ const CityScreen = ({navigation, ...props}) => {
                 </View>
             )
         }
+        
         return (
             <View style={styles.screen}>
                 <View style={styles.headSearch}>

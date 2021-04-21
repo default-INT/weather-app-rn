@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.whitesmoke,
         margin: 10,
-        borderRadius: 10,
-        elevation: 0
+        borderRadius: 10
     },
     weatherContainer: {
         alignItems: 'center',

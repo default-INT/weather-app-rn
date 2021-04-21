@@ -69,6 +69,9 @@ export const MainNavigator = () => {
     return (
         <MainTabNavigator.Navigator
             lazy={true}
+            tabBarOptions={{
+                keyboardHidesTabBar: true
+            }}
         >
             <MainTabNavigator.Screen
                 name="CityScreen"

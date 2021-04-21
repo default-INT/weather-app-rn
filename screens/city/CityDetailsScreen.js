@@ -14,7 +14,6 @@ const CityDetailsScreen = ({navigation, route, ...props}) => {
             headerTitleAlign: 'center'
         })
     }, []);
-    // const weatherIcon = WEATHER_ICONS[cityWeather.toUpperCase()] || WEATHER_ICONS.DEFAULT;
     return (
         <View style={styles.screen}>
             <View>

@@ -19,7 +19,9 @@ export const getCurrentLocation = () => {
             throw new Error('You need to grant locarion permissions to use this app.')
         }
         try {
-            const location = await Location.getCurrentPositionAsync({timeInterval: 5000});
+            const location = await Location.getCurrentPositionAsync({
+                timeInterval: 5000
+            });
             const {latitude, longitude} = location.coords;
             dispatch({
                 type: LOCATION.GET_CURRENT_LOCATION,
