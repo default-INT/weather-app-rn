@@ -1,3 +1,3 @@
-import HourlyScreen from "./HourlyScreen";
+import { HourlyScreen } from "./HourlyScreenRefactor";
 
 export { HourlyScreen };

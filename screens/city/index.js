@@ -1,5 +1,5 @@
-import CityScreen from "./CityScreen";
-import CityDetailsScreen from "./CityDetailsScreen";
+import { CityScreen } from "./CityScreenRef";
+import { CityDetailsScreen } from "./CityDetailsScreenRef";
 
 export {
     CityScreen, CityDetailsScreen

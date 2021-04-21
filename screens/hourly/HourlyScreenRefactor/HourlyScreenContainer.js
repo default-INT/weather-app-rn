@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, StyleSheet, Alert, ActivityIndicator, FlatList, Text } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useCallback, useEffect, useState } from "react";
+import { Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-import { citiesActions, locationActions } from "../../store/actions";
-import { AllowAccesScreen } from "../support-screen";
-import { HourItem } from "../../components";
-import { convertDateFromUTC, dayFormatter, MONTHS } from "../../constants/utils";
-import Colors from "../../constants/color";
+import { convertDateFromUTC, dayFormatter, MONTHS } from "../../../constants/utils";
+import { citiesActions, locationActions } from "../../../store/actions";
+import HourlyScreenView from "./HourlyScreenView";
 
-const HourlyScreen = ({navigation, ...props}) => {
+
+const HourlyScreenContainer = ({ navigation, ...props }) => {
     const [isLoading, setIsLoading] = useState(false);
     const currentLocation = useSelector(state => state.location.currentLocation);
     const currentCityWeather = useSelector(state => state.cities.currentCityWeather);
@@ -20,7 +19,7 @@ const HourlyScreen = ({navigation, ...props}) => {
             await dispatch(locationActions.getCurrentLocation());
             await loadWeather();
         } catch (err) {
-            Alert.alert('Error', err.message, [{text: 'Okay'}]);
+            Alert.alert('Error', err.message, [{ text: 'Okay' }]);
         }
         setIsLoading(false);
     }, [dispatch, currentLocation]);
@@ -71,49 +70,15 @@ const HourlyScreen = ({navigation, ...props}) => {
         }
     }, [navigation]);
 
-    if (isLoading) {
-        return (
-            <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} /> 
-            </View>
-        )
-    }
-
-    if (!currentLocation) {
-        return (
-            <AllowAccesScreen allowAccesHandler={allowAccesHandler} />
-        )
-    }
-    
-    if (!currentCityWeather) {
-        return (
-            <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} /> 
-            </View>
-        )
-    }
-
-    const date = convertDateFromUTC(currentCityWeather.hourly[0].dt);
-    const hourly = currentCityWeather.hourly.filter(hour => convertDateFromUTC(hour.dt).getDate() === date.getDate());
-    
     return (
-        <View style={styles.screen}>
-            <FlatList
-                data={hourly}
-                keyExtractor={item => item.dt + ''}
-                renderItem={itemData => <HourItem hour={itemData.item} />}
-                refreshing={isLoading}
-                onRefresh={() => loadWeather()}
-            />
-        </View>
+        <HourlyScreenView
+            isLoading={isLoading}
+            currentCityWeather={currentCityWeather}
+            currentLocation={currentLocation}
+            loadWeather={loadWeather}
+            allowAccesHandler={allowAccesHandler}
+        />
     )
 };
 
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        backgroundColor: Colors.white
-    }
-});
-
-export default HourlyScreen;
+export default HourlyScreenContainer;

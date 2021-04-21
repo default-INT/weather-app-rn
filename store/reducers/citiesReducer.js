@@ -3,7 +3,9 @@ import { CITIES } from "../../constants/types";
 const initialState = {
     citiesWeather: [],
     searchedCities: [],
-    currentCityWeather: null
+    currentCityWeather: null,
+    error: null,
+    loading: false
 }
 
 
