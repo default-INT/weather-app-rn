@@ -1,11 +1,14 @@
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { CityScreen, CityDetailsScreen } from "../screens/city";
 import { DailyScreen } from "../screens/daily";
-import { HourlyScreen } from "../screens/hourly";
+import { HourlyTodayScreen, HourlyYesterdayScreen } from "../screens/hourly";
+import Colors  from "../constants/color";
 
 const defaultStackNavOtions = {
     headerStyle: {
@@ -13,6 +16,12 @@ const defaultStackNavOtions = {
         shadowOpacity: 0
     }
 }
+
+const CustomTab = ({tabInfo, children}) => (
+    <View style={{ borderBottomColor: tabInfo.color}}>
+        <Text style={{color: tabInfo.color, fontWeight: tabInfo.focused ? 'normal' : 'normal'}}>{children}</Text>
+    </View>
+)
 
 const CityStackNavigator = createStackNavigator();
 
@@ -48,6 +57,56 @@ const DailyNavigator = () => {
     )
 };
 
+const HourlyMaterialTopTabNavigator = createMaterialTopTabNavigator();
+
+const HourlyTopTabNavigator = () => {
+    return (
+        <HourlyMaterialTopTabNavigator.Navigator 
+            initialRouteName="HourlyToday"
+            style={{
+                backgroundColor: Colors.white
+            }}
+            tabBarOptions={{
+                activeTintColor: Colors.primary,
+                inactiveTintColor: Colors.hint,
+                indicatorStyle: {
+                    backgroundColor: Colors.primary
+                },
+                labelStyle: { 
+                    activeTintColor: Colors.primary
+                },
+                style: {
+                    alignSelf: 'center',
+                    width: '50%',
+                    elevation: 0,
+                    shadowOffset: 0,
+                    backgroundColor: Colors.white
+                }
+            }}
+        >
+            <HourlyMaterialTopTabNavigator.Screen
+                name="HourlyYesterday"
+                component={HourlyYesterdayScreen}
+                options={{ 
+                    tabBarLabel: tabInfo => (
+                        <CustomTab tabInfo={tabInfo} >Yesterday</CustomTab>
+                    )
+                 }}
+
+            />
+            <HourlyMaterialTopTabNavigator.Screen
+                name="HourlyToday"
+                component={HourlyTodayScreen}
+                options={{ 
+                    tabBarLabel: tabInfo => (
+                        <CustomTab tabInfo={tabInfo}>Today</CustomTab>
+                    )
+                 }}
+            />
+        </HourlyMaterialTopTabNavigator.Navigator>
+    )
+}
+
 const HourlyStackNavigator = createStackNavigator();
 
 const HourlyNavigator = () => {
@@ -57,7 +116,7 @@ const HourlyNavigator = () => {
         >
             <HourlyStackNavigator.Screen
                 name="Hourly"
-                component={HourlyScreen}
+                component={HourlyTopTabNavigator}
             />
         </HourlyStackNavigator.Navigator>
     )

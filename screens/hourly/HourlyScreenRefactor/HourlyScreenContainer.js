@@ -1,16 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import * as FileSystem from 'expo-file-system';
+
 
 import { convertDateFromUTC, dayFormatter, MONTHS } from "../../../constants/utils";
 import { citiesActions, locationActions } from "../../../store/actions";
 import HourlyScreenView from "./HourlyScreenView";
 
 
-const HourlyScreenContainer = ({ navigation, ...props }) => {
+const HourlyScreenContainer = ({ navigation, route, ...props }) => {
+    const {
+        currentCityWeather,
+        loadWeatherAction
+    } = props;
+
     const [isLoading, setIsLoading] = useState(false);
     const currentLocation = useSelector(state => state.location.currentLocation);
-    const currentCityWeather = useSelector(state => state.cities.currentCityWeather);
     const dispatch = useDispatch();
 
     const allowAccesHandler = useCallback(async () => {
@@ -27,7 +33,16 @@ const HourlyScreenContainer = ({ navigation, ...props }) => {
     const loadWeather = useCallback(async () => {
         setIsLoading(true);
         try {
-            await dispatch(citiesActions.getCurrentCityWeather());
+            await dispatch(loadWeatherAction());
+            const getDate = () => {
+                return convertDateFromUTC(currentCityWeather.hourly[0].dt)
+            };
+            navigation.dangerouslyGetParent().setOptions({
+                headerTitle: currentCityWeather ? `${currentCityWeather.city} - ${MONTHS[getDate().getMonth()]}, ${dayFormatter(getDate().getDate())}` : '',
+                headerTitleStyle: {
+                    fontSize: 28
+                }
+            });
         } catch (err) {
             console.log(err.message);
         }
@@ -37,11 +52,12 @@ const HourlyScreenContainer = ({ navigation, ...props }) => {
     useEffect(() => {
         if (!currentCityWeather) {
             loadWeather();
+            return;
         }
         const getDate = () => {
             return convertDateFromUTC(currentCityWeather.hourly[0].dt)
         };
-        navigation.setOptions({
+        navigation.dangerouslyGetParent().setOptions({
             headerTitle: currentCityWeather ? `${currentCityWeather.city} - ${MONTHS[getDate().getMonth()]}, ${dayFormatter(getDate().getDate())}` : '',
             headerTitleStyle: {
                 fontSize: 28
@@ -57,9 +73,14 @@ const HourlyScreenContainer = ({ navigation, ...props }) => {
                     unsubscribeTabPress();
                 }
             });
-        const unsubscribeFocus = navigation.dangerouslyGetParent()
-            .addListener('focus', () => {
-                unsubscribeTabPress = navigation.dangerouslyGetParent()
+        const unsubscribeFocusTopTab = navigation
+            .addListener('focus', () => {  
+                loadWeather();
+                
+            });
+        const unsubscribeFocus = navigation.dangerouslyGetParent().dangerouslyGetParent()
+            .addListener('focus', () => {             
+                unsubscribeTabPress = navigation.dangerouslyGetParent().dangerouslyGetParent()
                     .addListener('tabPress', e => {
                         loadWeather();
                     });
@@ -67,6 +88,7 @@ const HourlyScreenContainer = ({ navigation, ...props }) => {
         return () => {
             unsubscribeBlur();
             unsubscribeFocus();
+            unsubscribeFocusTopTab();
         }
     }, [navigation]);
 

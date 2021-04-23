@@ -1,3 +1,1 @@
-import {DailyScreen} from "./DailyScreenRefactor";
-
-export { DailyScreen };
+export {DailyScreen} from "./DailyScreenRefactor";

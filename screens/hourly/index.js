@@ -1,3 +1,1 @@
-import { HourlyScreen } from "./HourlyScreenRefactor";
-
-export { HourlyScreen };
+export { HourlyTodayScreen, HourlyYesterdayScreen } from "./HourlyScreenRefactor";

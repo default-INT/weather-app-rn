@@ -1,3 +1,4 @@
-import HourlyScreen from "./HourlyScreenContainer";
+import HourlyTodayScreen from "./HourlyTodayWrapper";
+import HourlyYesterdayScreen from "./HourlyYesterdayWrapper";
 
-export { HourlyScreen };
+export { HourlyTodayScreen, HourlyYesterdayScreen };

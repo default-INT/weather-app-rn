@@ -4,12 +4,18 @@ const initialState = {
     citiesWeather: [],
     searchedCities: [],
     currentCityWeather: null,
-    error: null,
-    loading: false
+    currentCityWeatherYesterday: null,
 }
 
 
 const handlers = {
+    [CITIES.SET_YESTERDAY_WEATHER]: (state, {payload}) => ({
+        ...state,
+        currentCityWeatherYesterday: {
+            ...state.currentCityWeather,
+            hourly: payload
+        }
+    }),
     [CITIES.SET_CITIES_WEATHER]: (state, {payload}) => ({
         ...state,
         citiesWeather: payload

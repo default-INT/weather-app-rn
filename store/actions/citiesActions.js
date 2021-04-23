@@ -1,5 +1,8 @@
+import * as FileSystem from "expo-file-system";
+
 import { CITIES } from "../../constants/types";
-import { URL, APPID } from "../../constants";
+import { URL, APPID, CITY_FILE_NAME } from "../../constants";
+import { eqDate } from "../../constants/utils";
 import { DEFAULT_CITIES } from "../../data/dummy-data";
 
 
@@ -38,7 +41,7 @@ export const getCitiesInCircleWeather = cityCount => {
         if (!response.ok) {
             throw new Error("Can't fetch cities in circle");
         }
-        
+
         const cities = await response.json();
         dispatch({
             type: CITIES.SET_CITIES_WEATHER,
@@ -63,10 +66,10 @@ export const getCitiesWeatherByName = cityName => {
 
 export const getCurrentCityWeather = () => {
     return async (dispatch, getState) => {
-        dispatch({
-            type: CITIES.SET_CURRENT_CITY_WEATHER,
-            payload: null
-        })
+        // dispatch({
+        //     type: CITIES.SET_CURRENT_CITY_WEATHER,
+        //     payload: null
+        // })
         const { currentLocation } = getState().location;
         let response = await fetch(`${URL}/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&appid=${APPID}`);
         if (!response.ok) {
@@ -89,6 +92,54 @@ export const getCurrentCityWeather = () => {
                 daily,
                 hourly
             }
+        })
+    }
+}
+
+export const getYesterdayWeather = () => {
+    return async (dispatch, getState) => {
+        const { currentLocation } = getState().location;
+        const { currentCityWeather } = getState().cities;
+        const currentDate = new Date();
+
+        const filePath = FileSystem.documentDirectory + CITY_FILE_NAME;
+        const dirInfo = await FileSystem.getInfoAsync(filePath);
+
+        if (dirInfo.exists) {
+            const cityWeatherStr = await FileSystem.readAsStringAsync(filePath);
+
+            
+            const { city, date, hourly } = JSON.parse(cityWeatherStr);
+            
+            const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1);
+            console.log(date)
+            console.log(prevDate.toISOString())
+            console.log(eqDate(new Date(date), prevDate))
+            if (currentCityWeather.city === city && eqDate(new Date(date), prevDate)) {
+                dispatch({
+                    type: CITIES.SET_YESTERDAY_WEATHER,
+                    payload: hourly
+                })
+                return;
+            }
+        }
+        console.log('fetch');
+        const yesterdayDt = Math.floor((Date.now() - 86400000)/1000);
+        const response = await fetch(`${URL}/onecall/timemachine?lat=${currentLocation.lat}&lon=${currentLocation.lon}&dt=${yesterdayDt}&appid=${APPID}`);
+        if (!response.ok) {
+            throw new Error("Can't fetch weather data on loaction");
+        }
+        const { hourly } = await response.json();
+        const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1);
+        FileSystem.writeAsStringAsync(filePath, JSON.stringify({
+            date: prevDate.toISOString(),
+            city: currentCityWeather.city,
+            hourly
+        }));
+        console.log('write');
+        dispatch({
+            type: CITIES.SET_YESTERDAY_WEATHER,
+            payload: hourly
         })
     }
 }
