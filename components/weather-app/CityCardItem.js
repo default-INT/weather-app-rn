@@ -6,7 +6,7 @@ import { TouchableComponent, WeatherIcon } from "../UI";
 import { toTempFormatter } from "../../constants/utils";
 import Colors from "../../constants/color";
 
-const CityCardItem = ({city, onSelect, ...prosp}) => {
+const CityCardItem = ({city, onSelect, ...props}) => {
     return (
         <Card style={styles.card}>
             <View style={styles.touchable}>

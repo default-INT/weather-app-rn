@@ -12,7 +12,8 @@ import HourlyScreenView from "./HourlyScreenView";
 const HourlyScreenContainer = ({ navigation, route, ...props }) => {
     const {
         currentCityWeather,
-        loadWeatherAction
+        loadWeatherAction,
+        onOpenFile
     } = props;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -99,6 +100,7 @@ const HourlyScreenContainer = ({ navigation, route, ...props }) => {
             currentLocation={currentLocation}
             loadWeather={loadWeather}
             allowAccesHandler={allowAccesHandler}
+            onOpenFile={onOpenFile}
         />
     )
 };

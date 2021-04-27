@@ -1,4 +1,5 @@
 import * as FileSystem from "expo-file-system";
+import * as RNFileSystem from "react-native-fs";
 
 import { CITIES } from "../../constants/types";
 import { URL, APPID, CITY_FILE_NAME } from "../../constants";
@@ -66,10 +67,6 @@ export const getCitiesWeatherByName = cityName => {
 
 export const getCurrentCityWeather = () => {
     return async (dispatch, getState) => {
-        // dispatch({
-        //     type: CITIES.SET_CURRENT_CITY_WEATHER,
-        //     payload: null
-        // })
         const { currentLocation } = getState().location;
         let response = await fetch(`${URL}/weather?lat=${currentLocation.lat}&lon=${currentLocation.lon}&appid=${APPID}`);
         if (!response.ok) {
@@ -108,13 +105,10 @@ export const getYesterdayWeather = () => {
         if (dirInfo.exists) {
             const cityWeatherStr = await FileSystem.readAsStringAsync(filePath);
 
-            
             const { city, date, hourly } = JSON.parse(cityWeatherStr);
             
             const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1);
-            console.log(date)
-            console.log(prevDate.toISOString())
-            console.log(eqDate(new Date(date), prevDate))
+
             if (currentCityWeather.city === city && eqDate(new Date(date), prevDate)) {
                 dispatch({
                     type: CITIES.SET_YESTERDAY_WEATHER,
@@ -123,7 +117,6 @@ export const getYesterdayWeather = () => {
                 return;
             }
         }
-        console.log('fetch');
         const yesterdayDt = Math.floor((Date.now() - 86400000)/1000);
         const response = await fetch(`${URL}/onecall/timemachine?lat=${currentLocation.lat}&lon=${currentLocation.lon}&dt=${yesterdayDt}&appid=${APPID}`);
         if (!response.ok) {

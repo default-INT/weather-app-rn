@@ -79,7 +79,7 @@ const HourlyTopTabNavigator = () => {
                     alignSelf: 'center',
                     width: '50%',
                     elevation: 0,
-                    shadowOffset: 0,
+                    shadowRadius: 0,
                     backgroundColor: Colors.white
                 }
             }}

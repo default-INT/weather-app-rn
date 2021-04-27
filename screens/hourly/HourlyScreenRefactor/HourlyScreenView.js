@@ -1,9 +1,10 @@
 import React from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View, TouchableOpacity, Image, Text } from "react-native";
 
 import { HourItem } from "../../../components";
 import { convertDateFromUTC } from "../../../constants/utils";
 import { AllowAccesScreen } from "../../support-screen";
+import {FloatButton} from "../../../components/UI";
 import Colors from "../../../constants/color";
 import styles from "./styles";
 
@@ -14,7 +15,8 @@ const HourlyScreenView = ({navigation, ...props}) => {
         currentCityWeather,
         currentLocation,
         loadWeather,
-        allowAccesHandler
+        allowAccesHandler,
+        onOpenFile
     } = props;
 
     if (isLoading) {
@@ -51,6 +53,7 @@ const HourlyScreenView = ({navigation, ...props}) => {
                 refreshing={isLoading}
                 onRefresh={() => loadWeather()}
             />
+            {onOpenFile && <FloatButton onPress={onOpenFile} />}
         </View>
     )
 };
