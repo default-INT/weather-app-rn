@@ -1,5 +1,4 @@
 import * as FileSystem from "expo-file-system";
-import * as RNFileSystem from "react-native-fs";
 
 import { CITIES } from "../../constants/types";
 import { URL, APPID, CITY_FILE_NAME } from "../../constants";

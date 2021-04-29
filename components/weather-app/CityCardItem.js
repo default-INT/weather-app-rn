@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import Card from "../Card";
-import { TouchableComponent, WeatherIcon } from "../UI";
+import { TouchableComponent, WeatherIcon, DefaultText, TitleText } from "../UI";
 import { toTempFormatter } from "../../constants/utils";
 import Colors from "../../constants/color";
 
@@ -13,12 +13,12 @@ const CityCardItem = ({city, onSelect, ...props}) => {
                 <TouchableComponent onPress={() => onSelect(city)}>
                     <View>
                         <View style={styles.title}>
-                            <Text style={styles.titleText}>{city.name}</Text>
+                            <TitleText>{city.name}</TitleText>
                         </View>
                         <View style={styles.weatherContainer}>
                             <WeatherIcon iconName={city.weather[0].icon} />
                             <View style={styles.temp}>
-                                <Text>{toTempFormatter(city.main.temp)} С</Text>
+                                <DefaultText>{toTempFormatter(city.main.temp)} С</DefaultText>
                             </View>
                         </View>
                     </View>
@@ -51,10 +51,6 @@ const styles = StyleSheet.create({
     title: {
         padding: 10,
         alignItems: 'center'
-    },
-    titleText: {
-        fontSize: 18,
-        fontWeight: 'bold'
     },
     touchable: {
         overflow: 'hidden',

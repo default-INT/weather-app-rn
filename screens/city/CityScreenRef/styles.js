@@ -1,4 +1,4 @@
-import {StyleSheet} from "react-native";
+import {StyleSheet, Dimensions} from "react-native";
 
 import Colors from "../../../constants/color";
 
@@ -6,7 +6,7 @@ export default StyleSheet.create({
     screen: {
         backgroundColor: Colors.white,
         flex: 1,
-        paddingHorizontal: 5
+        paddingHorizontal: '5%'
     },
     headSearch: {
         padding: 10

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, TextInput, View, TouchableWithoutFeedback, Platform } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import Colors from "../constants/color";
@@ -37,12 +37,14 @@ const styles = StyleSheet.create({
     search: {
         borderColor: Colors.whitesmoke,
         borderWidth: 1,
-        padding: 8,
+        padding: Platform.OS === 'android' ? 0 : 8,
         borderRadius: 8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        marginTop: Platform.OS === 'android' ? 10 : 0,
+        marginHorizontal: '4%'
     },
     iconContainer: {
         padding: 3,
@@ -50,7 +52,8 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         color: Colors.black,
-        width: '80%',
+        width: '90%',
+        fontFamily: 'Roboto-Light'
     }
 });
 

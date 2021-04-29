@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {StyleSheet, View} from "react-native";
 
-import { WeatherIcon } from "../../components/UI";
-import { convertDateFromUTC, toTempFormatter, toTimeFormat } from "../../constants/utils";
+import {DefaultText, TitleText, WeatherIcon} from "../../components/UI";
+import {convertDateFromUTC, toTempFormatter, toTimeFormat} from "../../constants/utils";
 
 const HourItem = ({hour, ...props}) => {
     const temp = toTempFormatter(hour.temp);
@@ -12,10 +12,10 @@ const HourItem = ({hour, ...props}) => {
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
                     <View style={styles.title}>
-                        <Text style={styles.titleText}>{toTimeFormat(date.getHours(), date.getMinutes())}</Text>
+                        <TitleText>{toTimeFormat(date.getHours(), date.getMinutes())}</TitleText>
                     </View>
                     <View style={styles.temp}>
-                        <Text>{temp} С</Text>
+                        <DefaultText>{temp} С</DefaultText>
                     </View>
                 </View>
                 <View style={styles.rightContainer}>

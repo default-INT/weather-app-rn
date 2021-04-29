@@ -20,14 +20,12 @@ export default StyleSheet.create({
     },
     title: {
         padding: 10,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     titleText: {
-        fontSize: 20,
-        fontWeight: 'bold'
+        fontSize: 20
     },
     weatherText: {
-        fontSize: 20,
-        fontWeight: 'bold'
+        fontSize: 20
     }
 });

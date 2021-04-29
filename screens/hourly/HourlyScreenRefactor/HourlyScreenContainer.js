@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Alert } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import * as FileSystem from 'expo-file-system';
+import React, {useCallback, useEffect, useState} from "react";
+import {Alert} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
 
 
-import { convertDateFromUTC, dayFormatter, MONTHS } from "../../../constants/utils";
-import { citiesActions, locationActions } from "../../../store/actions";
+import {convertDateFromUTC, dayFormatter, MONTHS} from "../../../constants/utils";
+import {locationActions} from "../../../store/actions";
 import HourlyScreenView from "./HourlyScreenView";
 
 
@@ -13,7 +12,8 @@ const HourlyScreenContainer = ({ navigation, route, ...props }) => {
     const {
         currentCityWeather,
         loadWeatherAction,
-        onOpenFile
+        onOpenFile,
+        onPressFloatButton
     } = props;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -101,6 +101,8 @@ const HourlyScreenContainer = ({ navigation, route, ...props }) => {
             loadWeather={loadWeather}
             allowAccesHandler={allowAccesHandler}
             onOpenFile={onOpenFile}
+            onPressFloatButton={onPressFloatButton}
+            BottomSheetManager={props.BottomSheetManager}
         />
     )
 };

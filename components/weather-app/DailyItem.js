@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {StyleSheet, View} from "react-native";
 
-import { convertDateFromUTC, toTempFormatter, dayFormatter, MONTHS } from "../../constants/utils";
-import { WeatherIcon } from "../../components/UI";
+import {convertDateFromUTC, dayFormatter, MONTHS, toTempFormatter} from "../../constants/utils";
+import {DefaultText, TitleText, WeatherIcon} from "../../components/UI";
 
 const DailyItem = ({daily, ...props}) => {
     const temp = toTempFormatter(daily.temp.day);
@@ -12,10 +12,10 @@ const DailyItem = ({daily, ...props}) => {
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
                     <View style={styles.title}>
-                        <Text style={styles.titleText}>{MONTHS[date.getMonth()]}, {dayFormatter(date.getDate())}</Text>
+                        <TitleText>{MONTHS[date.getMonth()]}, {dayFormatter(date.getDate())}</TitleText>
                     </View>
                     <View style={styles.temp}>
-                        <Text>{temp} С</Text>
+                        <DefaultText>{temp} С</DefaultText>
                     </View>
                 </View>
                 <View style={styles.rightContainer}>
@@ -49,10 +49,6 @@ const styles = StyleSheet.create({
     title: {
         padding: 10,
         alignItems: 'center'
-    },
-    titleText: {
-        fontSize: 18,
-        fontWeight: 'bold'
     },
     touchable: {
         overflow: 'hidden'

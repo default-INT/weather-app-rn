@@ -26,6 +26,11 @@ PODS:
     - UMCore
     - UMPermissionsInterface
     - UMTaskManagerInterface
+  - EXMediaLibrary (12.0.2):
+    - React-Core
+    - UMCore
+    - UMFileSystemInterface
+    - UMPermissionsInterface
   - EXPermissions (10.0.0):
     - UMCore
     - UMPermissionsInterface
@@ -305,7 +310,7 @@ PODS:
   - UMFileSystemInterface (5.4.0)
   - UMFontInterface (5.4.0)
   - UMImageLoaderInterface (5.4.0)
-  - UMPermissionsInterface (5.4.0):
+  - UMPermissionsInterface (6.1.0):
     - UMCore
   - UMReactNativeAdapter (5.7.0):
     - React-Core
@@ -326,6 +331,7 @@ DEPENDENCIES:
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXLocation (from `../node_modules/expo-location/ios`)
+  - EXMediaLibrary (from `../node_modules/expo-media-library/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
   - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
@@ -372,7 +378,7 @@ DEPENDENCIES:
   - UMFileSystemInterface (from `../node_modules/unimodules-file-system-interface/ios`)
   - UMFontInterface (from `../node_modules/unimodules-font-interface/ios`)
   - UMImageLoaderInterface (from `../node_modules/unimodules-image-loader-interface/ios`)
-  - UMPermissionsInterface (from `../node_modules/unimodules-permissions-interface/ios`)
+  - UMPermissionsInterface (from `../node_modules/expo-media-library/node_modules/unimodules-permissions-interface/ios`)
   - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
   - UMSensorsInterface (from `../node_modules/unimodules-sensors-interface/ios`)
   - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
@@ -403,6 +409,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-linear-gradient/ios"
   EXLocation:
     :path: "../node_modules/expo-location/ios"
+  EXMediaLibrary:
+    :path: "../node_modules/expo-media-library/ios"
   EXPermissions:
     :path: "../node_modules/expo-permissions/ios"
   EXSecureStore:
@@ -492,7 +500,7 @@ EXTERNAL SOURCES:
   UMImageLoaderInterface:
     :path: "../node_modules/unimodules-image-loader-interface/ios"
   UMPermissionsInterface:
-    :path: "../node_modules/unimodules-permissions-interface/ios"
+    :path: "../node_modules/expo-media-library/node_modules/unimodules-permissions-interface/ios"
   UMReactNativeAdapter:
     :path: "../node_modules/@unimodules/react-native-adapter/ios"
   UMSensorsInterface:
@@ -514,6 +522,7 @@ SPEC CHECKSUMS:
   EXKeepAwake: cb0641970ea9c9a35759a5e3be23eca7e0c83b70
   EXLinearGradient: e082a9b5ec21532b98acba28ee988f9e70b50119
   EXLocation: 5689bbf163581eefb70978130611ec25d027bcf3
+  EXMediaLibrary: 72f20381f48ca1818f7e45935c4b48766773a1df
   EXPermissions: 55cadfd11547c07a5390ba7eea63bd998a71018d
   EXSecureStore: 7cda998bd7c150b28021cb9c85b0747daa6a5ab5
   EXSplashScreen: 5bd1d445b1c5fc883fa2f5612633defc48759273
@@ -558,7 +567,7 @@ SPEC CHECKSUMS:
   UMFileSystemInterface: c87240844f0337bff174cedc80282b62a5298095
   UMFontInterface: 60ea8ac3aec17845ffeb4bd9ddd02f7f23049b7e
   UMImageLoaderInterface: 8fdbaf4f610d6e0e1a9286db78e05294db950581
-  UMPermissionsInterface: ea27d84c8e1f70426ac04cdc93369b214b7fe1a1
+  UMPermissionsInterface: 4351145563e703c521fe2299e08227bc3584b94a
   UMReactNativeAdapter: c2a83677e340b1448d7dfa6412377dd8bbf62c2c
   UMSensorsInterface: d7e32791c7d4e0fa9ae3e76698624f90494b7bd9
   UMTaskManagerInterface: eee33176282a16e6348aabcbe89ebd363e69f9cb

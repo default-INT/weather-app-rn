@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {StyleSheet, View} from "react-native";
 
-import { TouchableComponent, WeatherIcon } from "../UI";
-import { toTempFormatter } from "../../constants/utils";
+import {DefaultText, TitleText, TouchableComponent, WeatherIcon} from "../UI";
+import {toTempFormatter} from "../../constants/utils";
 import Colors from "../../constants/color";
 
-const CitySearchItem = ({city, onSelect, ...prosp}) => {
+const CitySearchItem = ({city, onSelect, ...props}) => {
     const temp = toTempFormatter(city.main.temp);
     return (
         <View style={styles.card}>
@@ -14,10 +14,10 @@ const CitySearchItem = ({city, onSelect, ...prosp}) => {
                     <View style={styles.mainContainer}>
                         <View style={styles.leftContainer}>
                             <View style={styles.title}>
-                                <Text style={styles.titleText}>{city.name}, {city.sys.country}</Text>
+                                <TitleText>{city.name}, {city.sys.country}</TitleText>
                             </View>
                             <View style={styles.temp}>
-                                <Text>{temp} С</Text>
+                                <DefaultText>{temp} С</DefaultText>
                             </View>
                         </View>
                         <View style={styles.rightContainer}>
@@ -58,10 +58,6 @@ const styles = StyleSheet.create({
     title: {
         padding: 10,
         alignItems: 'center'
-    },
-    titleText: {
-        fontSize: 18,
-        fontWeight: 'bold'
     },
     touchable: {
         overflow: 'hidden'

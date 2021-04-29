@@ -1,16 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { MaterialIcons } from "@expo/vector-icons";
+import {View} from "react-native";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import {createStackNavigator} from "@react-navigation/stack";
+import {MaterialIcons} from "@expo/vector-icons";
 
-import { CityScreen, CityDetailsScreen } from "../screens/city";
-import { DailyScreen } from "../screens/daily";
-import { HourlyTodayScreen, HourlyYesterdayScreen } from "../screens/hourly";
-import Colors  from "../constants/color";
+import {CityDetailsScreen, CityScreen} from "../screens/city";
+import {DailyScreen} from "../screens/daily";
+import {HourlyTodayScreen, HourlyYesterdayScreen} from "../screens/hourly";
+import {DefaultText} from "../components/UI";
+import Colors from "../constants/color";
 
-const defaultStackNavOtions = {
+const defaultStackNavOptions = {
     headerStyle: {
         elevation: 0,
         shadowOpacity: 0
@@ -19,7 +20,7 @@ const defaultStackNavOtions = {
 
 const CustomTab = ({tabInfo, children}) => (
     <View style={{ borderBottomColor: tabInfo.color}}>
-        <Text style={{color: tabInfo.color, fontWeight: tabInfo.focused ? 'normal' : 'normal'}}>{children}</Text>
+        <DefaultText style={{color: tabInfo.color, fontWeight: tabInfo.focused ? 'normal' : 'normal'}}>{children}</DefaultText>
     </View>
 )
 
@@ -28,7 +29,7 @@ const CityStackNavigator = createStackNavigator();
 const CityNavigator = () => {
     return (
         <CityStackNavigator.Navigator
-            screenOptions={defaultStackNavOtions}
+            screenOptions={defaultStackNavOptions}
         >
             <CityStackNavigator.Screen 
                 name="City"
@@ -47,7 +48,7 @@ const DailyStackNavigator = createStackNavigator();
 const DailyNavigator = () => {
     return (
         <DailyStackNavigator.Navigator
-            screenOptions={defaultStackNavOtions}
+            screenOptions={defaultStackNavOptions}
         >
             <DailyStackNavigator.Screen
                 name="Daily"
@@ -112,7 +113,7 @@ const HourlyStackNavigator = createStackNavigator();
 const HourlyNavigator = () => {
     return (
         <HourlyStackNavigator.Navigator
-        screenOptions={defaultStackNavOtions}
+        screenOptions={defaultStackNavOptions}
         >
             <HourlyStackNavigator.Screen
                 name="Hourly"

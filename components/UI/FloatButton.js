@@ -1,21 +1,19 @@
 import React from "react";
-import {View, StyleSheet} from "react-native";
+import {StyleSheet, TouchableOpacity} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
-import TouchableComponent from "./TouchableComponent";
 import Colors from "../../constants/color";
 
 
 const FloatButton = ({onPress, ...props}) => {
     return (
-        <TouchableComponent
-            activeOpacity={0.7}
+        <TouchableOpacity
             style={styles.touchableOpacityStyle}
             onPress={onPress}
             {...props}
         >
             <Ionicons name='folder-open' color={Colors.white} size={30} />
-        </TouchableComponent>
+        </TouchableOpacity>
     )
 }
 

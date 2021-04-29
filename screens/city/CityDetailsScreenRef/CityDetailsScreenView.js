@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-import { WeatherIcon } from "../../../components/UI";
+import {TitleText, WeatherIcon} from "../../../components/UI";
 import { MONTHS, toTempFormatter, toTimeFormat } from "../../../constants/utils";
 import styles from "./styles";
 
@@ -13,14 +13,14 @@ const CityDetailsScreenView = ({navigation, ...props}) => {
         <View style={styles.screen}>
             <View>
                 <View style={styles.title}>
-                    <Text style={styles.titleText}>{MONTHS[date.getMonth()]}, {date.getDate()}st</Text>
-                    <Text style={styles.titleText}>{toTimeFormat(date.getHours(), date.getMinutes())}</Text>
+                    <TitleText style={styles.titleText}>{MONTHS[date.getMonth()]}, {date.getDate()}st</TitleText>
+                    <TitleText style={styles.titleText}>{toTimeFormat(date.getHours(), date.getMinutes())}</TitleText>
                 </View>
                 <View style={styles.weatherContainer}>
                     <WeatherIcon iconName={weatherIcon} size={130} />
                     <View style={styles.weather}>
-                        <Text style={styles.weatherText}>{cityWeather}</Text>
-                        <Text style={styles.weatherText}>{toTempFormatter(cityTemp)} С</Text>
+                        <TitleText style={styles.weatherText}>{cityWeather}</TitleText>
+                        <TitleText style={styles.weatherText}>{toTempFormatter(cityTemp)} С</TitleText>
                     </View>
                 </View>
             </View>

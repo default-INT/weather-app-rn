@@ -3,6 +3,7 @@ import { ActivityIndicator, Button, FlatList, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { CityCardItem, CitySearchItem, SearchInput } from "../../../components";
+import {DefaultText} from "../../../components/UI";
 import Colors from "../../../constants/color";
 import styles from "./styles";
 
@@ -37,7 +38,7 @@ const CityScreenView = (props) => {
     if (error) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>{error}</Text>
+                <DefaultText>{error}</DefaultText>
                 <View>
                     <Button title='Try again' color={Colors.black} onPress={() => loadCities()}/>
                 </View>
@@ -61,7 +62,7 @@ const CityScreenView = (props) => {
                         <Ionicons name="md-sad-outline" color={Colors.gray} size={50}/>
                     </View>
                     <View style={styles.textContainer}>
-                        <Text style={styles.notFoundText} >No data for "{cityInputValue}"</Text>
+                        <DefaultText style={styles.notFoundText} >No data for "{cityInputValue}"</DefaultText>
                     </View>
                 </View>
             )
@@ -70,7 +71,7 @@ const CityScreenView = (props) => {
         return (
             <View style={styles.screen}>
                 <View style={styles.headSearch}>
-                    <Text style={styles.headSearchText}>SEARCH RESULTS</Text>
+                    <DefaultText style={styles.headSearchText}>SEARCH RESULTS</DefaultText>
                 </View>
                 <View>
                 <FlatList

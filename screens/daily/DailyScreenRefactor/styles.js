@@ -6,7 +6,8 @@ import Colors from "../../../constants/color";
 export default StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
+        paddingHorizontal: '5%'
     },
     imgContainer: {
         backgroundColor: Colors.lightGray,
