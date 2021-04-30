@@ -3,7 +3,7 @@ import {Alert, Platform} from "react-native";
 import FileViewer from 'react-native-file-viewer';
 import * as FileSystem from "expo-file-system";
 import * as RNFileSystem from "react-native-fs";
-import * as Permissions from "expo-permissions";
+import {Notifications} from "react-native-notifications";
 import {useSelector} from "react-redux";
 
 import {citiesActions} from "../../../store/actions";
@@ -29,24 +29,42 @@ const HourlyYesterdayWrapper = props => {
     ];
 
     const onDownloadFile = async () => {
-
-        // const permission = await MediaLibrary.getPermissionsAsync();
-        // const askPermission = await MediaLibrary.requestPermissionsAsync();
-        // const result = await MediaLibrary.createAssetAsync(filePath);
-        // console.log(permission);
-        // const data = await RNFileSystem.readFile(filePath);
-        // console.log(filePath);
-        const res = await RNFileSystem.copyFile(filePath,RNFileSystem.DownloadDirectoryPath + "/" + CITY_FILE_NAME);
-        console.log(res);
-        console.log(RNFileSystem.DownloadDirectoryPath)
+        try {
+            await RNFileSystem.copyFile(filePath,RNFileSystem.DownloadDirectoryPath + "/" + CITY_FILE_NAME);
+            Notifications.postLocalNotification({
+                body: "File with yesterday forecast succesfully donwloaded",
+                title: "File Downloaded",
+                sound: "chime.aiff",
+                category: "SOME_CATEGORY",
+                link: "localNotificationLink",
+                fireDate: new Date(),
+            });
+            Alert.alert('Success', 'File downloaded success', [{ text: 'Ok' }]);
+            setVisibleBottomSheet(false);
+            onOpenFile(RNFileSystem.DownloadDirectoryPath + "/" + CITY_FILE_NAME);
+        } catch (err) {
+            Alert.alert('Error', err.message, [{text: 'Ok'}]);
+        }
     }
 
-    const onPressFloatButton = () => {
+    const onPressFloatButton = async () => {
         if (Platform.OS === 'android') {
             setVisibleBottomSheet(true);
             return;
+        } else {
+            Notifications.registerRemoteNotifications();
+            const Notification = await Notifications.getInitialNotification();
+            console.log(Notification)
+            Notifications.postLocalNotification({
+                body: "File with yesterday forecast succesfully donwloaded",
+                title: "File Downloaded",
+                sound: "chime.aiff",
+                category: "SOME_CATEGORY",
+                link: "localNotificationLink",
+                fireDate: new Date(),
+            });
         }
-        onOpenFile();
+        onOpenFile(filePath);
     }
 
     const BottomSheetManager = () => {
@@ -66,11 +84,12 @@ const HourlyYesterdayWrapper = props => {
         )
     }
 
-    const onOpenFile = useCallback(async () => {
+    const onOpenFile = useCallback(async (path) => {
         try {
-            await FileViewer.open(filePath);
+            await FileViewer.open(path);
+            setVisibleBottomSheet(false);
         } catch (err) {
-            Alert.alert('Error', err.message, [{ message: 'Okay' }]);
+            Alert.alert('Error', err.message, [{ text: 'Okay' }]);
             console.log(err.message);
         }
     }, []);
@@ -81,7 +100,7 @@ const HourlyYesterdayWrapper = props => {
         <HourlyScreenContainer
             loadWeatherAction={citiesActions.getYesterdayWeather}
             currentCityWeather={currentCityWeather}
-            onOpenFile={onOpenFile}
+            onOpenFile={() => onOpenFile(filePath)}
             onPressFloatButton={onPressFloatButton}
             BottomSheetManager={BottomSheetManager}
             {...props}

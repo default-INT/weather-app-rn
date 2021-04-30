@@ -27,6 +27,7 @@
     "react-native-file-viewer": "^2.1.4",
     "react-native-fs": "^2.17.0",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-notifications": "^3.4.2",
     "react-native-paper": "^4.7.2",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "^3.2.0",
@@ -36,7 +37,8 @@
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.3",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tslib": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

@@ -9,7 +9,7 @@ target 'weatherapp' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
-
+#   pod 'react-native-notifications', :podspec => '../node_modules/react-native-notifications/react-native-notifications.podspec'
   # Uncomment the code below to enable Flipper.
   #
   # You should not install Flipper in CI environments when creating release
