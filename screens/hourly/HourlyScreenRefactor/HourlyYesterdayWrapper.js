@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from "react";
-import {Alert, Platform} from "react-native";
+import {Alert, Platform, PermissionsAndroid} from "react-native";
 import FileViewer from 'react-native-file-viewer';
 import * as FileSystem from "expo-file-system";
 import * as RNFileSystem from "react-native-fs";
@@ -30,6 +30,24 @@ const HourlyYesterdayWrapper = props => {
 
     const onDownloadFile = async () => {
         try {
+            const result = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+            if (!result) {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    {
+                        title: "Write External Permission",
+                        message:
+                            "WeatherApp needs access to your external storage.",
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
+                    }
+                );
+                if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+                    Alert.alert('Warning', "You can't write to external storage!", [{text: 'Ok'}]);
+                    return;
+                }
+            }
             await RNFileSystem.copyFile(filePath,RNFileSystem.DownloadDirectoryPath + "/" + CITY_FILE_NAME);
             Notifications.postLocalNotification({
                 body: "File with yesterday forecast succesfully donwloaded",
@@ -52,9 +70,6 @@ const HourlyYesterdayWrapper = props => {
             setVisibleBottomSheet(true);
             return;
         } else {
-            Notifications.registerRemoteNotifications();
-            const Notification = await Notifications.getInitialNotification();
-            console.log(Notification)
             Notifications.postLocalNotification({
                 body: "File with yesterday forecast succesfully donwloaded",
                 title: "File Downloaded",

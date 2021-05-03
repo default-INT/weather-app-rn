@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { ActivityIndicator, Button, FlatList, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, {useEffect} from "react";
+import {Button, FlatList, SafeAreaView, View} from "react-native";
+import {Ionicons} from "@expo/vector-icons";
 
-import { CityCardItem, CitySearchItem, SearchInput } from "../../../components";
-import {DefaultText} from "../../../components/UI";
+import {CityCardItem, CitySearchItem, SearchInput} from "../../../components";
+import {DefaultText, LargeLoader} from "../../../components/UI";
 import Colors from "../../../constants/color";
 import styles from "./styles";
-
 
 
 const CityScreenView = (props) => {
@@ -37,19 +36,19 @@ const CityScreenView = (props) => {
 
     if (error) {
         return (
-            <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
+            <SafeAreaView style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
                 <DefaultText>{error}</DefaultText>
                 <View>
                     <Button title='Try again' color={Colors.black} onPress={() => loadCities()}/>
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }
 
     if (isLoading) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} />
+                <LargeLoader />
             </View>
         )
     }
@@ -75,6 +74,7 @@ const CityScreenView = (props) => {
                 </View>
                 <View>
                 <FlatList
+
                     data={searchedCities}
                     keyExtractor={item => item.id + ''}
                     renderItem={itemData => <CitySearchItem city={itemData.item} onSelect={onSelectCityHandler.bind(this)} />}

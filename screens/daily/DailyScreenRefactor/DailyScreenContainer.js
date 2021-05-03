@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { citiesActions, locationActions } from "../../../store/actions";
 import DailyScreenView from "./DailyScreenView";
+import Config from "react-native-config";
 
 
 const DailyScreenContainer = ({ navigation, ...props }) => {
@@ -43,7 +44,8 @@ const DailyScreenContainer = ({ navigation, ...props }) => {
         navigation.setOptions({
             headerTitle: currentCityWeather ? currentCityWeather.city : '',
             headerTitleStyle: {
-                fontSize: 28
+                fontSize: 28,
+                color: Config.TEXT_COLOR
             }
         });
     }, [currentCityWeather]);

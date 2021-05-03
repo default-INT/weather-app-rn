@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import Config from "react-native-config";
 
 const Card = props => {
     return <View style={{...styles.card, ...props.style}}>{props.children}</View>;
@@ -8,7 +9,7 @@ const Card = props => {
 const styles = StyleSheet.create({
     card: {
         borderRadius: 10,
-        backgroundColor: 'white'
+        backgroundColor: Config.MAIN_COLOR
     }
 });
 

@@ -23,6 +23,7 @@
     "react-devtools": "^4.12.4",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
+    "react-native-config": "^1.4.2",
     "react-native-elements": "^3.4.1",
     "react-native-file-viewer": "^2.1.4",
     "react-native-fs": "^2.17.0",

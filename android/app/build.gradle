@@ -86,6 +86,9 @@ apply from: "../../node_modules/react-native/react.gradle"
 apply from: "../../node_modules/expo-constants/scripts/get-app-config-android.gradle"
 apply from: "../../node_modules/expo-updates/scripts/create-manifest-android.gradle"
 
+apply plugin: "com.android.application" /* This should already exist */
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -199,6 +202,10 @@ dependencies {
         exclude group:'com.facebook.flipper'
     }
     addUnimodulesDependencies()
+
+    // react-native-configuration
+//     implementation "com.facebook.react:react-native:+"
+//     implementation project(':react-native-config')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

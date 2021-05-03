@@ -1,10 +1,10 @@
 import React from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import {FlatList, View} from "react-native";
 
-import { DailyItem } from "../../../components";
-import { AllowAccesScreen } from "../../support-screen";
+import {DailyItem} from "../../../components";
+import {LargeLoader} from "../../../components/UI";
+import {AllowAccesScreen} from "../../support-screen";
 import styles from "./styles";
-import Colors from "../../../constants/color";
 
 
 const DailyScreenView = ({navigation, ...props}) => {
@@ -20,7 +20,7 @@ const DailyScreenView = ({navigation, ...props}) => {
     if (isLoading) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} /> 
+                <LargeLoader />
             </View>
         )
     }
@@ -34,7 +34,7 @@ const DailyScreenView = ({navigation, ...props}) => {
     if (!currentCityWeather) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} /> 
+                <LargeLoader />
             </View>
         )
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
+import Config from "react-native-config";
 
 import Colors from "../../constants/color";
 
@@ -20,7 +21,7 @@ const FloatButton = ({onPress, ...props}) => {
 const styles = StyleSheet.create({
     btnContainer: {
         borderRadius: 20,
-        backgroundColor: Colors.primary
+        backgroundColor: Config.PRIMARY_COLOR
     },
     touchableOpacityStyle: {
         position: 'absolute',
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         right: 30,
         bottom: 30,
-        backgroundColor: Colors.primary,
+        backgroundColor: Config.PRIMARY_COLOR,
         elevation: 10,
         borderRadius: 80,
         shadowRadius: 5,

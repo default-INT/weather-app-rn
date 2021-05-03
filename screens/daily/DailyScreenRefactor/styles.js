@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 
 import Colors from "../../../constants/color";
+import Config from "react-native-config";
 
 
 export default StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Config.MAIN_COLOR,
         paddingHorizontal: '5%'
     },
     imgContainer: {

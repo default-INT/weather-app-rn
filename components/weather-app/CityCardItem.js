@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import Config from "react-native-config";
 
 import Card from "../Card";
 import { TouchableComponent, WeatherIcon, DefaultText, TitleText } from "../UI";
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     card: {
         flex: 1,
         borderWidth: 1,
-        borderColor: Colors.whitesmoke,
+        borderColor: Config.WHITESMOKE_COLOR,
         margin: 10,
         borderRadius: 10
     },

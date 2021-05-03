@@ -1,7 +1,7 @@
 import React from "react";
 import {Text, StyleSheet} from "react-native";
+import Config from "react-native-config";
 
-import Colors from "../../constants/color";
 
 const DefaultText = ({style, children, ...props}) => {
     return <Text style={{...styles.text, ...style}}>{children}</Text>
@@ -9,7 +9,7 @@ const DefaultText = ({style, children, ...props}) => {
 
 const styles = StyleSheet.create({
     text: {
-        color: Colors.black,
+        color: Config.TEXT_COLOR,
         fontFamily: 'Roboto-Regular'
     }
 });

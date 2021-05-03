@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native";
+import {View} from "react-native";
 
 import {TitleText, WeatherIcon} from "../../../components/UI";
-import { MONTHS, toTempFormatter, toTimeFormat } from "../../../constants/utils";
+import {MONTHS, toTempFormatter, toTimeFormat} from "../../../constants/utils";
 import styles from "./styles";
 
 

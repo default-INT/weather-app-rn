@@ -1,11 +1,10 @@
 import React from "react";
-import {ActivityIndicator, FlatList, View} from "react-native";
+import {FlatList, View} from "react-native";
 
 import {HourItem} from "../../../components";
 import {convertDateFromUTC} from "../../../constants/utils";
 import {AllowAccesScreen} from "../../support-screen";
-import {FloatButton} from "../../../components/UI";
-import Colors from "../../../constants/color";
+import {FloatButton, LargeLoader} from "../../../components/UI";
 import styles from "./styles";
 
 
@@ -24,7 +23,7 @@ const HourlyScreenView = ({navigation, ...props}) => {
     if (isLoading) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} /> 
+                <LargeLoader />
             </View>
         )
     }
@@ -38,7 +37,7 @@ const HourlyScreenView = ({navigation, ...props}) => {
     if (!currentCityWeather) {
         return (
             <View style={{...styles.screen, justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size='large' color={Colors.primary} /> 
+                <LargeLoader />
             </View>
         )
     }

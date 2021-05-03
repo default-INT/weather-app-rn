@@ -1,6 +1,5 @@
 import {StyleSheet} from "react-native";
-
-import Colors from "../../../constants/color";
+import Config from "react-native-config";
 
 
 export default StyleSheet.create({
@@ -8,7 +7,7 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.white
+        backgroundColor: Config.MAIN_COLOR
     },
     weatherContainer: {
         alignItems: 'center',

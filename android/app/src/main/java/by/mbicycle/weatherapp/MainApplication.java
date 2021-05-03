@@ -12,6 +12,9 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 // Notifications
 import com.wix.reactnativenotifications.RNNotificationsPackage;
+//react-native-configuration
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+
 import com.facebook.soloader.SoLoader;
 import by.mbicycle.weatherapp.generated.BasePackageList;
 

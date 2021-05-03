@@ -22,6 +22,8 @@ buildscript {
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion" // for notification
 
+//         implementation "com.facebook.react:react-native:+"
+//         implementation project(':react-native-config')
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

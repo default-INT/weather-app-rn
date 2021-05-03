@@ -1,6 +1,7 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import Config from "react-native-config";
 
 import {DefaultText, TouchableComponent} from "../../components/UI";
 import Colors from "../../constants/color";
@@ -30,7 +31,7 @@ const AllowAccesScreen = ({allowAccesHandler, ...props}) => {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: Config.MAIN_COLOR,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -45,10 +46,10 @@ const styles = StyleSheet.create({
         height: 80,
     },
     messageText: {
-        color: Colors.gray
+        color: Config.TEXT_COLOR
     },
     accessButton: {
-        backgroundColor: Colors.black,
+        backgroundColor: Config.TEXT_COLOR,
         borderRadius: 8,
         overflow: 'hidden',
         paddingVertical: 10,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     accessButtonText: {
-        color: Colors.white,
+        color: Config.MAIN_COLOR,
     }
 });
 

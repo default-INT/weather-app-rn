@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {convertDateFromUTC, dayFormatter, MONTHS} from "../../../constants/utils";
 import {locationActions} from "../../../store/actions";
 import HourlyScreenView from "./HourlyScreenView";
+import Config from "react-native-config";
 
 
 const HourlyScreenContainer = ({ navigation, route, ...props }) => {
@@ -59,9 +60,12 @@ const HourlyScreenContainer = ({ navigation, route, ...props }) => {
             return convertDateFromUTC(currentCityWeather.hourly[0].dt)
         };
         navigation.dangerouslyGetParent().setOptions({
-            headerTitle: currentCityWeather ? `${currentCityWeather.city} - ${MONTHS[getDate().getMonth()]}, ${dayFormatter(getDate().getDate())}` : '',
+            headerTitle: currentCityWeather
+                ? `${currentCityWeather.city} - ${MONTHS[getDate().getMonth()]}, ${dayFormatter(getDate().getDate())}`
+                : '',
             headerTitleStyle: {
-                fontSize: 28
+                fontSize: 28,
+                color: Config.TEXT_COLOR
             }
         });
     }, [currentCityWeather]);

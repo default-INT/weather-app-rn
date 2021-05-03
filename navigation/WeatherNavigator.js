@@ -4,18 +4,27 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {createStackNavigator} from "@react-navigation/stack";
 import {MaterialIcons} from "@expo/vector-icons";
+import Config from "react-native-config";
 
 import {CityDetailsScreen, CityScreen} from "../screens/city";
 import {DailyScreen} from "../screens/daily";
 import {HourlyTodayScreen, HourlyYesterdayScreen} from "../screens/hourly";
 import {DefaultText} from "../components/UI";
-import Colors from "../constants/color";
 
 const defaultStackNavOptions = {
     headerStyle: {
         elevation: 0,
-        shadowOpacity: 0
-    }
+        shadowOpacity: 0,
+        backgroundColor: Config.MAIN_COLOR
+    },
+    headerTintColor: Config.TEXT_COLOR,
+    headerBackTitleStyle: {
+        color: Config.TEXT_COLOR
+    },
+    headerTitleStyle: {
+        color: Config.TEXT_COLOR
+    },
+    headerTitle: ''
 }
 
 const CustomTab = ({tabInfo, children}) => (
@@ -65,23 +74,23 @@ const HourlyTopTabNavigator = () => {
         <HourlyMaterialTopTabNavigator.Navigator 
             initialRouteName="HourlyToday"
             style={{
-                backgroundColor: Colors.white
+                backgroundColor: Config.MAIN_COLOR
             }}
             tabBarOptions={{
-                activeTintColor: Colors.primary,
-                inactiveTintColor: Colors.hint,
+                activeTintColor: Config.PRIMARY_COLOR,
+                inactiveTintColor: Config.HINT_COLOR,
                 indicatorStyle: {
-                    backgroundColor: Colors.primary
+                    backgroundColor: Config.PRIMARY_COLOR
                 },
                 labelStyle: { 
-                    activeTintColor: Colors.primary
+                    activeTintColor: Config.PRIMARY_COLOR
                 },
                 style: {
                     alignSelf: 'center',
                     width: '50%',
                     elevation: 0,
                     shadowRadius: 0,
-                    backgroundColor: Colors.white
+                    backgroundColor: Config.MAIN_COLOR
                 }
             }}
         >
@@ -129,9 +138,18 @@ export const MainNavigator = () => {
     return (
         <MainTabNavigator.Navigator
             lazy={true}
-            tabBarOptions={{
-                keyboardHidesTabBar: true
+            style={{
+                backgroundColor: Config.MAIN_COLOR
             }}
+            tabBarOptions={{
+                keyboardHidesTabBar: true,
+                activeTintColor: Config.PRIMARY_COLOR,
+                inactiveTintColor: Config.TINT_COLOR,
+                style: {
+                    backgroundColor: Config.MAIN_COLOR
+                }
+            }}
+
         >
             <MainTabNavigator.Screen
                 name="CityScreen"

@@ -1,10 +1,9 @@
-import {StyleSheet, Dimensions} from "react-native";
-
-import Colors from "../../../constants/color";
+import {StyleSheet} from "react-native";
+import Config from "react-native-config";
 
 export default StyleSheet.create({
     screen: {
-        backgroundColor: Colors.white,
+        backgroundColor: Config.MAIN_COLOR,
         flex: 1,
         paddingHorizontal: '5%'
     },
@@ -15,10 +14,10 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.white
+        backgroundColor: Config.MAIN_COLOR
     },
     imgContainer: {
-        backgroundColor: Colors.lightGray,
+        backgroundColor: Config.LIGHT_GRAY,
         padding: 40,
         borderRadius: 80
     },

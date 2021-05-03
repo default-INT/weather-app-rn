@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, View, TouchableWithoutFeedback, Platform } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import React, {useEffect, useState} from "react";
+import {StyleSheet, TextInput, TouchableWithoutFeedback, View} from "react-native";
+import {MaterialIcons} from "@expo/vector-icons";
 
 import Colors from "../constants/color";
+import Config from "react-native-config";
+import {getOsValue} from "../services";
 
 
 const SearchInput = ({value, onChangeText = () => '', ...props}) => {
@@ -25,6 +27,7 @@ const SearchInput = ({value, onChangeText = () => '', ...props}) => {
                 placeholder='Enter city here'
                 onChangeText={textChangeHandler}
                 value={inputValue}
+                placeholderTextColor={Config.SEARCH_COLOR}
             />
             <TouchableWithoutFeedback onPress={() => textChangeHandler('')}>
                 <MaterialIcons style={{opacity: inputValue !== '' ? 1 : 0}} name='cancel' size={20} color={Colors.whitesmoke}/>
@@ -35,15 +38,15 @@ const SearchInput = ({value, onChangeText = () => '', ...props}) => {
 
 const styles = StyleSheet.create({
     search: {
-        borderColor: Colors.whitesmoke,
+        borderColor: Config.WHITESMOKE_COLOR,
         borderWidth: 1,
-        padding: Platform.OS === 'android' ? 0 : 8,
+        padding: getOsValue(0, 8),
         borderRadius: 8,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        marginTop: Platform.OS === 'android' ? 10 : 0,
+        marginTop: getOsValue(10, 0),
         marginHorizontal: '4%'
     },
     iconContainer: {
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     searchInput: {
-        color: Colors.black,
+        color: Config.TEXT_COLOR,
         width: '90%',
         fontFamily: 'Roboto-Light'
     }
