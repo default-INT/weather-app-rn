@@ -104,6 +104,10 @@ const CityScreenContainer = ({navigation, ...props}) => {
         }
     }, [navigation]);
 
+    const openIconSelectorScreen = () => {
+        navigation.navigate("ImageSelector")
+    }
+
     return (
         <CityScreenView
             error={error}
@@ -117,6 +121,7 @@ const CityScreenContainer = ({navigation, ...props}) => {
             citiesWeather={citiesWeather}
             textHandler={textHandler}
             navigation={navigation}
+            openIconSelectorScreen={openIconSelectorScreen}
         />
     )
 }

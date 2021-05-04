@@ -3,7 +3,9 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "build-android-debug-amazon": "export ENVFILE=.env.amazon && cd android && ./gradlew assembleDebug && cd ..",
+    "build-android-debug-dev": "export ENVFILE=.env.div && cd android && ./gradlew assembleDebug && cd .."
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",
@@ -28,6 +30,7 @@
     "react-native-file-viewer": "^2.1.4",
     "react-native-fs": "^2.17.0",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-image-picker": "^3.5.0",
     "react-native-notifications": "^3.4.2",
     "react-native-paper": "^4.7.2",
     "react-native-reanimated": "~1.13.0",

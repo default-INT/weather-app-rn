@@ -5,11 +5,11 @@ import * as FileSystem from "expo-file-system";
 import * as RNFileSystem from "react-native-fs";
 import {Notifications} from "react-native-notifications";
 import {useSelector} from "react-redux";
+import {BottomSheet, ListItem} from "react-native-elements";
 
 import {citiesActions} from "../../../store/actions";
 import {CITY_FILE_NAME} from "../../../constants";
 import HourlyScreenContainer from "./HourlyScreenContainer";
-import {BottomSheet, ListItem} from "react-native-elements";
 
 const HourlyYesterdayWrapper = props => {
     const [visibleBottomSheet, setVisibleBottomSheet] = useState(false);

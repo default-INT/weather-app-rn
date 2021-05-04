@@ -3,7 +3,7 @@ import {Button, FlatList, SafeAreaView, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
 import {CityCardItem, CitySearchItem, SearchInput} from "../../../components";
-import {DefaultText, LargeLoader} from "../../../components/UI";
+import {DefaultText, FloatButton, LargeLoader} from "../../../components/UI";
 import Colors from "../../../constants/color";
 import styles from "./styles";
 
@@ -20,7 +20,8 @@ const CityScreenView = (props) => {
         fetchCityByName,
         citiesWeather,
         textHandler,
-        navigation
+        navigation,
+        openIconSelectorScreen
     } = props;
 
     useEffect(() => {
@@ -96,6 +97,7 @@ const CityScreenView = (props) => {
                 refreshing={isLoading}
                 onRefresh={() => loadCities()}
              />
+            <FloatButton name='person' onPress={openIconSelectorScreen} />
         </View>
     )
 }

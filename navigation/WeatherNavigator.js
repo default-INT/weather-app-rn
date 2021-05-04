@@ -10,6 +10,7 @@ import {CityDetailsScreen, CityScreen} from "../screens/city";
 import {DailyScreen} from "../screens/daily";
 import {HourlyTodayScreen, HourlyYesterdayScreen} from "../screens/hourly";
 import {DefaultText} from "../components/UI";
+import {IconSelectorScreen, iconSelectorScreenOptions} from "../screens/other";
 
 const defaultStackNavOptions = {
     headerStyle: {
@@ -47,6 +48,11 @@ const CityNavigator = () => {
             <CityStackNavigator.Screen 
                 name="CityDetails"
                 component={CityDetailsScreen}
+            />
+            <CityStackNavigator.Screen
+                name="ImageSelector"
+                component={IconSelectorScreen}
+                options={iconSelectorScreenOptions}
             />
         </CityStackNavigator.Navigator>
     )
