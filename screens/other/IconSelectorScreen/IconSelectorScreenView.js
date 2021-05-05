@@ -1,26 +1,24 @@
 import React from "react";
-import {View, Image, Button, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {Image, StyleSheet, TouchableOpacity, View} from "react-native";
 import Config from "react-native-config";
-import {MaterialIcons} from "@expo/vector-icons";
 
-import {TouchableComponent} from "../../../components/UI";
-import {BottomSheet, ListItem} from "react-native-elements";
+import {LargeLoader} from "../../../components/UI";
 
 const IconSelectorScreenView = props => {
     const {
-        profileImage,
-        visibleBottomSheet,
-        onAlertImageChoice
+        onAlertImageChoice,
+        imgUri,
+        loading
     } = props;
     return (
         <View style={styles.screen}>
             <View style={styles.imageContainer}>
                 <View style={styles.touchable}>
                 <TouchableOpacity useForeground onPress={onAlertImageChoice} >
-                    <Image
+                    {loading ? <LargeLoader/> : <Image
                         style={styles.image}
-                        source={profileImage ? require('../../../assets/my-adaptive-icon.png') : require('../../../assets/my-adaptive-icon.png')}
-                    />
+                        source={imgUri ? {uri: imgUri} : require('../../../assets/my-adaptive-icon.png')}
+                    />}
                 </TouchableOpacity>
                 </View>
             </View>

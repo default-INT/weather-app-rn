@@ -1,9 +1,70 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Alert} from "react-native";
+import * as Permission from "expo-permissions";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import IconSelectorScreenView from "./IconSelectorScreenView";
 
 const IconSelectorScreenContainer = props => {
+
+    const [imgUri, setImgUri] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const readItem = async () => {
+        setLoading(true);
+        try {
+            console.log('read')
+            const uri = await AsyncStorage.getItem('@user_photo');
+            setImgUri(uri);
+        } catch (err) {
+            console.warn(err.message);
+            Alert.alert('Error', err.message, [{text: 'Ok'}]);
+        }
+        setLoading(false);
+    }
+
+    const saveImageInStorage = async imgResponse => {
+        try {
+            if (imgResponse.didCancel) {
+                return;
+            }
+            await AsyncStorage.setItem('@user_photo', imgResponse.uri);
+            setImgUri(imgResponse.uri);
+        } catch (err) {
+            console.warn(err.message);
+        }
+    }
+    const verifyCameraPermission = async () => {
+        const result = await Permission.getAsync(Permission.CAMERA);
+        if (!result.granted) {
+            const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA);
+            if (status !== 'granted') {
+                Alert.alert('Warning', "Camera permission denied", [{text: 'Ok'}]);
+            }
+        }
+
+    }
+
+    const onOpenCamera = async () => {
+        await verifyCameraPermission();
+        const options = {
+            mediaType: "photo",
+            cameraType: 'front',
+            saveToPhotos: true
+        }
+        launchCamera(options, response => {
+            saveImageInStorage(response);
+        })
+    }
+
+    const onOpenGallery = () => {
+        launchImageLibrary({
+            mediaType: 'photo'
+        }, response => {
+            saveImageInStorage(response);
+        })
+    }
 
     const onAlertImageChoice = () => Alert.alert(
         "Select image",
@@ -11,18 +72,22 @@ const IconSelectorScreenContainer = props => {
         [
             {
                 text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
                 style: "destructive"
             },
-            { text: "Take photo", onPress: () => console.log("OK Pressed") },
-            { text: "Select image", onPress: () => console.log("Select image") },
+            { text: "Take photo", onPress: () => onOpenCamera() },
+            { text: "Select image", onPress: () => onOpenGallery() },
         ]
     );
 
+    useEffect(() => {
+        readItem();
+    }, []);
 
     return (
         <IconSelectorScreenView
+            loading={loading}
             onAlertImageChoice={onAlertImageChoice}
+            imgUri={imgUri}
         />
     )
 }

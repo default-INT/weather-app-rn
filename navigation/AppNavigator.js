@@ -5,7 +5,7 @@ import {MainNavigator} from "./WeatherNavigator";
 
 const AppNavigator = props => {
     return (
-        <NavigationContainer>
+        <NavigationContainer >
             <MainNavigator/>
         </NavigationContainer>
     )
