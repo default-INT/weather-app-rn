@@ -8,8 +8,8 @@
     "build-android-debug-dev": "export ENVFILE=.env.dev && cd android && ./gradlew assembleDebug && cd ..",
     "run-ios-dev": "ENVFILE=.env.dev react-native run-ios",
     "run-ios-amazon": "ENVFILE=.env.amazon react-native run-ios",
-    "run-ios-dev-ipad": "ENVFILE=.env.dev react-native run-ios 'iPad Pro (9.7-inch)'",
-    "run-ios-amazon-ipad": "ENVFILE=.env.amazon react-native run-ios 'iPad Pro (9.7-inch)'"
+    "run-ios-dev-ipad": "ENVFILE=.env.dev react-native run-ios --simulator='iPad Pro (9.7-inch)'",
+    "run-ios-amazon-ipad": "ENVFILE=.env.amazon react-native run-ios --simulator='iPad Pro (9.7-inch)'"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.4",
