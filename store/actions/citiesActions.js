@@ -4,7 +4,32 @@ import { CITIES } from "../../constants/types";
 import { URL, APPID, CITY_FILE_NAME } from "../../constants";
 import { eqDate } from "../../constants/utils";
 import { DEFAULT_CITIES } from "../../data/dummy-data";
+import {PermissionsAndroid} from "react-native";
 
+
+const verifyStoragePermission = async () => {
+    try {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            {
+                title: "Cool Write External Storage Permission",
+                message:
+                    "Cool Weather App needs access to your external storage " +
+                    "so you can write to external storage.",
+                buttonNeutral: "Ask Me Later",
+                buttonNegative: "Cancel",
+                buttonPositive: "OK"
+            }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            console.log("You can write to the external storage");
+        } else {
+            console.log("Write external storage permission denied");
+        }
+    } catch (err) {
+        console.warn(err);
+    }
+}
 
 
 export const clearCities = () => {
@@ -96,6 +121,9 @@ export const getYesterdayWeather = () => {
     return async (dispatch, getState) => {
         const { currentLocation } = getState().location;
         const { currentCityWeather } = getState().cities;
+
+        await verifyStoragePermission();
+
         const currentDate = new Date();
 
         const filePath = FileSystem.documentDirectory + CITY_FILE_NAME;
@@ -119,7 +147,7 @@ export const getYesterdayWeather = () => {
         const yesterdayDt = Math.floor((Date.now() - 86400000)/1000);
         const response = await fetch(`${URL}/onecall/timemachine?lat=${currentLocation.lat}&lon=${currentLocation.lon}&dt=${yesterdayDt}&appid=${APPID}`);
         if (!response.ok) {
-            throw new Error("Can't fetch weather data on loaction");
+            throw new Error("Can't fetch weather data on loсation");
         }
         const { hourly } = await response.json();
         const prevDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1);

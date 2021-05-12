@@ -101,7 +101,7 @@ const HourlyYesterdayWrapper = props => {
 
     const onOpenFile = useCallback(async (path) => {
         try {
-            await FileViewer.open(path);
+            await FileViewer.open(FileSystem.documentDirectory + CITY_FILE_NAME);
             setVisibleBottomSheet(false);
         } catch (err) {
             Alert.alert('Error', err.message, [{ text: 'Okay' }]);

@@ -5,6 +5,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import IconSelectorScreenView from "./IconSelectorScreenView";
+import {PermissionsAndroid} from "react-native";
 
 const IconSelectorScreenContainer = props => {
 
@@ -35,27 +36,46 @@ const IconSelectorScreenContainer = props => {
             console.warn(err.message);
         }
     }
-    const verifyCameraPermission = async () => {
-        const result = await Permission.getAsync(Permission.CAMERA);
-        if (!result.granted) {
-            const { status, permissions } = await Permissions.askAsync(Permissions.CAMERA);
-            if (status !== 'granted') {
-                Alert.alert('Warning', "Camera permission denied", [{text: 'Ok'}]);
-            }
-        }
 
+    const verifyCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: "Cool Photo App Camera Permission",
+                    message:
+                        "Cool Photo App needs access to your camera " +
+                        "so you can take awesome pictures.",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                }
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("You can use the camera");
+            } else {
+                console.log("Camera permission denied");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     const onOpenCamera = async () => {
-        await verifyCameraPermission();
-        const options = {
-            mediaType: "photo",
-            cameraType: 'front',
-            saveToPhotos: true
+        try {
+            await verifyCameraPermission();
+            const options = {
+                mediaType: "photo",
+                cameraType: 'front',
+                saveToPhotos: true
+            }
+            launchCamera(options, response => {
+                saveImageInStorage(response);
+            })
+        } catch (err) {
+            Alert.alert('Error', "Camera permission denied", [{text: 'Ok'}]);
         }
-        launchCamera(options, response => {
-            saveImageInStorage(response);
-        })
+
     }
 
     const onOpenGallery = () => {
