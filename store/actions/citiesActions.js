@@ -1,10 +1,11 @@
 import * as FileSystem from "expo-file-system";
+import {PermissionsAndroid, Platform} from "react-native";
 
 import { CITIES } from "../../constants/types";
 import { URL, APPID, CITY_FILE_NAME } from "../../constants";
 import { eqDate } from "../../constants/utils";
 import { DEFAULT_CITIES } from "../../data/dummy-data";
-import {PermissionsAndroid} from "react-native";
+
 
 
 const verifyStoragePermission = async () => {
@@ -122,7 +123,9 @@ export const getYesterdayWeather = () => {
         const { currentLocation } = getState().location;
         const { currentCityWeather } = getState().cities;
 
-        await verifyStoragePermission();
+        if (Platform.OS === 'android') {
+            await verifyStoragePermission();
+        }
 
         const currentDate = new Date();
 

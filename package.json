@@ -6,6 +6,8 @@
     "eject": "expo eject",
     "build-android-debug-amazon": "export ENVFILE=.env.amazon && cd android && ./gradlew assembleDebug && cd ..",
     "build-android-debug-dev": "export ENVFILE=.env.dev && cd android && ./gradlew assembleDebug && cd ..",
+    "build-android-release-amazon": "export ENVFILE=.env.amazon && cd android && ./gradlew assembleRelease && cd ..",
+    "build-android-release-dev": "export ENVFILE=.env.dev && cd android && ./gradlew assembleRelease && cd ..",
     "run-ios-dev": "ENVFILE=.env.dev react-native run-ios",
     "run-ios-amazon": "ENVFILE=.env.amazon react-native run-ios",
     "run-ios-dev-ipad": "ENVFILE=.env.dev react-native run-ios --simulator='iPad Pro (9.7-inch)'",

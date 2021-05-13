@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Alert} from "react-native";
+import {Alert, Platform} from "react-native";
 import * as Permission from "expo-permissions";
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,12 +15,11 @@ const IconSelectorScreenContainer = props => {
     const readItem = async () => {
         setLoading(true);
         try {
-            console.log('read')
             const uri = await AsyncStorage.getItem('@user_photo');
             setImgUri(uri);
         } catch (err) {
-            console.warn(err.message);
             Alert.alert('Error', err.message, [{text: 'Ok'}]);
+            console.warn(err.message);
         }
         setLoading(false);
     }
@@ -28,6 +27,9 @@ const IconSelectorScreenContainer = props => {
     const saveImageInStorage = async imgResponse => {
         try {
             if (imgResponse.didCancel) {
+                return;
+            } else if (imgResponse.errorCode) {
+                Alert.alert('Warning', imgResponse.errorCode, [{text: 'Ok'}]);
                 return;
             }
             await AsyncStorage.setItem('@user_photo', imgResponse.uri);
@@ -63,13 +65,14 @@ const IconSelectorScreenContainer = props => {
 
     const onOpenCamera = async () => {
         try {
-            await verifyCameraPermission();
-            const options = {
+            if (Platform.OS === 'android') {
+                await verifyCameraPermission();
+            }
+            launchCamera({
                 mediaType: "photo",
                 cameraType: 'front',
                 saveToPhotos: true
-            }
-            launchCamera(options, response => {
+            }, response => {
                 saveImageInStorage(response);
             })
         } catch (err) {
